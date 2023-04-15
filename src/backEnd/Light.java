@@ -14,7 +14,7 @@ public class Light {
 		this.pool = pool;
 	}
 	
-	public Queue<Iterable<DirectedEdge>> shine(int sourceNode) {
+	public Queue<Iterable<ColoredDirectedEdge>> shine(int sourceNode) {
 		
 		Queue<Iterable<DirectedEdge>> lightPaths = new Queue<>();
 		int currentWeight =Integer.MAX_VALUE;
@@ -25,7 +25,7 @@ public class Light {
 				currentWeight = (int) + edge.weight();
 			}
 			
-			if(currentWeight > lowestWeight) {
+			if(currentWeight < lowestWeight) {
 				while(!lightPaths.isEmpty()) {
 					lightPaths.dequeue();
 				}
@@ -35,19 +35,32 @@ public class Light {
 				lightPaths.enqueue(bag);				
 			}
 		}
-		return lightPaths;
+
+		Queue<Iterable<ColoredDirectedEdge>> colorPaths = new Queue<>();
+		while(!lightPaths.isEmpty()) {
+			colorPaths.enqueue(colorPath(lightPaths.dequeue()));
+		}
+		return colorPaths;
 	}
 	
-	public Iterable<ColoredDirectedEdge> colorPath(Iterable<DirectedEdge> path) {
+	private Iterable<ColoredDirectedEdge> colorPath(Iterable<DirectedEdge> path) {
+		Queue<ColoredDirectedEdge> coloredPath = new Queue<>();
 		if(colorQueue.isEmpty()) { // Add the color White to the Queue
 			colorQueue.push(255);
 			colorQueue.push(255);
 			colorQueue.push(255);
 		}
-		int r = colorQueue.pop();
-		int g = colorQueue.pop();
-		int b = colorQueue.pop();
-		return null;
+		int r = colorQueue.peek();
+		int g = colorQueue.peek();
+		int b = colorQueue.peek();
+
+		for(DirectedEdge edge : path ) {
+			r =-(int) (edge.weight()/lightIntensity);
+			r =-(int) ((edge.weight()/lightIntensity) * 1.2);
+			r =-(int) ((int) (edge.weight()/lightIntensity) * 1.1);
+			coloredPath.enqueue(new ColoredDirectedEdge(edge.from(),edge.to(),edge.weight(),r,g,b));
+		}
+		return coloredPath;
 		
 		
 	}

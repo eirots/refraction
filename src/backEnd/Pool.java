@@ -14,7 +14,7 @@ public class Pool {
 	private int numOfColumns;
 	private int rows;
 	
-	public Pool(In in) {
+	public Pool(In in, int maxWeight) {
 		Queue<String> intakeQueue = new Queue<String>();
 		Queue<String> primaryQueue = new Queue<String>();
 		Queue<String> secondaryQueue = new Queue<String>();
@@ -40,7 +40,7 @@ public class Pool {
 		while(!intakeQueue.isEmpty()) {
 			intakePop = intakeQueue.dequeue();
 			if(!intakeQueue.isEmpty() && !intakeQueue.peek().equals("#") && !intakePop.equals("#")) {
-				weight = StdRandom.uniformInt(10);
+				weight = StdRandom.uniformInt(maxWeight);
 				out.println(intakePop + " " + intakeQueue.peek() + " " + weight);
 				out.println(intakeQueue.peek() + " " + intakePop + " " + weight);
 			}
@@ -51,15 +51,15 @@ public class Pool {
 					secondaryPop = secondaryQueue.dequeue();
 					primaryPop = primaryQueue.dequeue();
 					if(!secondaryQueue.isEmpty()) {
-						weight = StdRandom.uniformInt(10);
+						weight = StdRandom.uniformInt(maxWeight);
 						out.println(primaryPop + " " + secondaryQueue.peek() + " " + weight);
 						out.println(secondaryQueue.peek() + " " + primaryPop + " " + weight);
 
-						weight = StdRandom.uniformInt(10);
+						weight = StdRandom.uniformInt(maxWeight);
 						out.println(secondaryPop + " " + primaryQueue.peek() + " " + weight);
 						out.println(primaryQueue.peek() + " " + secondaryPop + " " + weight);
 
-						weight = StdRandom.uniformInt(10);
+						weight = StdRandom.uniformInt(maxWeight);
 						out.println(secondaryQueue.peek() + " " + primaryQueue.peek() + " " + weight);
 						out.println(primaryQueue.peek() + " " + secondaryQueue.peek() + " " + weight);
 					}

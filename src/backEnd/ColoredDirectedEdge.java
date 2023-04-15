@@ -3,12 +3,21 @@ package backEnd;
 import edu.princeton.cs.algs4.DirectedEdge;
 
 public class ColoredDirectedEdge extends DirectedEdge {
-	int r,g,b;
+	private int r,g,b;
 	public ColoredDirectedEdge(int v, int w, double weight, int r, int g, int b) {
 		super(v, w, weight);
 		this.r=r;
 		this.g=g;
 		this.b=b;
+	}
+	public int getR() {
+		return r;
+	}
+	public int getG() {
+		return g;
+	}
+	public int getB() {
+		return b;
 	}
 
 }
