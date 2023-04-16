@@ -8,7 +8,16 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdRandom;
-
+/**
+ * The pool class provides functionality to build edge weighted graphs in a format similar to a grid. 
+ * It provides functionality to measure the shortest paths from one side of the graph to the far side, tracking the shortest path to each far vertex.
+ *  TODO Explain required file formating
+ *  TODO Create automated pool builder
+ *  TODO Allow loading of a saved pool
+ *  TODO Write better comments
+ * @author Spencer Peck
+ *
+ */
 public class Pool {
 	private EdgeWeightedDigraph diagraph;
 	private int numOfColumns;
@@ -79,7 +88,11 @@ public class Pool {
 		out.close();
 		this.diagraph = new EdgeWeightedDigraph(new In(fileName));
 	}
-	
+	/**
+	 * Refact Path calculates the shortest paths from the provided source to all of the vertexes on the other side of the graph
+	 * @param sourceVertex is where all the calculated paths will start from
+	 * @return an iterable collection of paths.
+	 */
 	public Bag<Iterable<DirectedEdge>> refractPath(int sourceVertex ) {
 		Bag<Iterable<DirectedEdge>> bag = new Bag<>();
 		int endColumnOffset = rows * (numOfColumns - 1);

@@ -1,7 +1,11 @@
 package backEnd;
 
 import edu.princeton.cs.algs4.DirectedEdge;
-
+/**
+ * Functions as a normal DirectedEdge would Howerver this contains variable fields for RGB color values
+ * @author Spencer Peck
+ *
+ */
 public class ColoredDirectedEdge extends DirectedEdge {
 	private int r,g,b;
 	public ColoredDirectedEdge(int v, int w, double weight, int r, int g, int b) {

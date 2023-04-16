@@ -4,6 +4,14 @@ import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 
+/**
+ * 
+ * TODO Heavy Duty Testing
+ * TODO Balance Weight/light intensity to create better color transitions
+ * TODO Better Comments
+ * @author Spencer Peck
+ *
+ */
 public class Light {
 	private int lightIntensity;
 	private Stack<Integer> colorQueue = new Stack<>();
@@ -14,6 +22,11 @@ public class Light {
 		this.pool = pool;
 	}
 	
+	/**
+	 * Build and return the shortest path(s)
+	 * @param sourceNode
+	 * @return
+	 */
 	public Queue<Iterable<ColoredDirectedEdge>> shine(int sourceNode) {
 		
 		Queue<Iterable<DirectedEdge>> lightPaths = new Queue<>();
@@ -40,9 +53,17 @@ public class Light {
 		while(!lightPaths.isEmpty()) {
 			colorPaths.enqueue(colorPath(lightPaths.dequeue()));
 		}
+		colorQueue.pop();//Move on to the next RGB set
+		colorQueue.pop();
+		colorQueue.pop();
 		return colorPaths;
 	}
 	
+	/**
+	 * Transmute edges into color edges
+	 * @param path
+	 * @return
+	 */
 	private Iterable<ColoredDirectedEdge> colorPath(Iterable<DirectedEdge> path) {
 		Queue<ColoredDirectedEdge> coloredPath = new Queue<>();
 		if(colorQueue.isEmpty()) { // Add the color White to the Queue
@@ -64,7 +85,12 @@ public class Light {
 		
 		
 	}
-	
+	/**
+	 * Add a new color to the stack
+	 * @param red
+	 * @param green
+	 * @param blue
+	 */
 	public void updateColorQueue(int red, int green, int blue) {
 		colorQueue.push(red);
 		colorQueue.push(green);
