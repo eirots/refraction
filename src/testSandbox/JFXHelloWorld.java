@@ -1,5 +1,10 @@
 package testSandbox;
 
+import backEnd.ColoredDirectedEdge;
+import backEnd.Light;
+import backEnd.Pool;
+import edu.princeton.cs.algs4.DirectedEdge;
+import edu.princeton.cs.algs4.In;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +16,14 @@ import javafx.stage.Stage;
 public class JFXHelloWorld extends Application {
 
 	public static void main(String[] args) {
+		Pool pool = new Pool(new In("src/backEnd/resources/gridGraph.txt"), 100);
+		Light light = new Light(1,pool);
+		for(Iterable<ColoredDirectedEdge> bag : light.shine(2)) {
+			for(ColoredDirectedEdge edge : bag ) {
+				System.out.println(edge);
+			}
+			System.out.println();
+		}
 		launch(args);
 	}
 
