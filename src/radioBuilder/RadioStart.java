@@ -1,38 +1,52 @@
 package radioBuilder;
 
 import generalFrontEnd.ContinueButton;
-import javafx.scene.Group;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Creates a Scene Graph for the first page in the application. 
+ * @author astorie
+ *
+ */
 public class RadioStart {
+	// TODO need to add formatting, make continue button work.
 
 	private Scene scene;
 	private Pane pn;
-	private ContinueButton btn = new ContinueButton(); //TODO change to a larger 'continue' button class
+	private ContinueButton btn = new ContinueButton(); // TODO change to a larger 'continue' button class
 	private Text txt = new Text("How large would you like your glass to be?");
+
 	
 	public RadioStart() {
 		this.pn = new Pane();
 		setFormatting();
-		
+
 		pn.getChildren().addAll(txt, btn);
 		this.scene = new Scene(pn);
 
-		
-	}
-	
-	private void setFormatting() {
-		btn.setText("Test button");
-		btn.setLayoutX(200); btn.setLayoutY(400);
-		
-		txt.setLayoutX(200); txt.setLayoutY(300);
-		txt.setTextAlignment(TextAlignment.CENTER);
 	}
 
+	/**
+	 * Sets the format
+	 */
+	private void setFormatting() {
+		btn.setText("Test button");
+		btn.setLayoutX(200);
+		btn.setLayoutY(400);
+
+		txt.setLayoutX(200);
+		txt.setLayoutY(300);
+		txt.setTextAlignment(TextAlignment.CENTER);
+	}
+	
+	/**
+	 * Creates a Scene Graph that asks the user what size they would like their container to be
+	 * @return Returns the first page of the application
+	 */
 	public Scene getScene() {
 		return scene;
 	}
