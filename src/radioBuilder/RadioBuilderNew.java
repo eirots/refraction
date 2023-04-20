@@ -6,35 +6,33 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
-/**
- * Creates a Scene Graph for the first page in the application. 
- * @author astorie
- *
- */
-public class RadioStart {
+public class RadioBuilderNew {
+
 	Scene scene;
 	AnchorPane ap;
 	Label title, label;
 	ContinueButton btn;
 	TextField height, width;
 
-	
-	public RadioStart() {
+	public RadioBuilderNew() {
 		this.ap = new AnchorPane();
 		setFormatting();
 		ap.getChildren().addAll(label, title, btn, width, height);
 		this.scene = new Scene(ap);
 	}
+	
+	public Scene getScene() {
+		return this.scene;
+	}
+
 
 	/**
-	 * Sets the format
+	 * Sets the formatting for this view.
 	 */
 	private void setFormatting() {
+
 		ap.prefHeight(500.0);
 		ap.prefWidth(500.0);
 
@@ -58,7 +56,7 @@ public class RadioStart {
 		width = new TextField();
 		width.setAlignment(Pos.CENTER);
 		width.setLayoutX(155);
-		width.setLayoutY(282);
+		height.setLayoutY(282);
 		width.setPromptText("Width");
 
 		height = new TextField();
@@ -66,14 +64,7 @@ public class RadioStart {
 		height.setLayoutX(155);
 		height.setLayoutY(310);
 		height.setPromptText("Height");
-	}
-	
-	/**
-	 * Creates a Scene Graph that asks the user what size they would like their container to be
-	 * @return Returns the first page of the application
-	 */
-	public Scene getScene() {
-		return scene;
+
 	}
 
 }
