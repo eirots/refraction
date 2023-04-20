@@ -1,5 +1,7 @@
 package generalFrontEnd;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 /**
@@ -9,28 +11,28 @@ import javafx.scene.control.Button;
  */
 public class ContinueButton extends Button{
 	
-	private int count;
+	private int count = 0;
 	
 	/**
 	 * Creates a ContinueButton for moving through the Refraction application
 	 */
 	public ContinueButton() {
 		super();
+		super.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			/**
+			 * Moves the application forward when the button is clicked. 
+			 */
+			public void handle(ActionEvent e) {
+				Films.swap(count);
+				count++;
+			}
+			
+		});
 		count = 1;
 	}
 	
-	/**
-	 * Moves the application forward when buttons are clicked
-	 */
-	public void click() {
-		count++;
-		
-		switch(count) {
-		case 2: //TODO this fires when RadioStart button is clicked
-			break;
-		case 3: //TODO 
-			break;
-		}
-	}
+	
 
 }

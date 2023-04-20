@@ -5,6 +5,7 @@ import backEnd.Light;
 import backEnd.Pool;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.In;
+import generalFrontEnd.Films;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,14 +13,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import radioBuilder.RadioStart;
 
 public class JFXHelloWorld extends Application {
+	public double stageX = 500;
+	public double stageY = 500;
+	public static Stage window;
+
+	public Scene scenes[] = { new RadioStart().getScene() };
 
 	public static void main(String[] args) {
 		Pool pool = new Pool(new In("src/backEnd/resources/gridGraph.txt"), 100);
-		Light light = new Light(1,pool);
-		for(Iterable<ColoredDirectedEdge> bag : light.shine(2)) {
-			for(ColoredDirectedEdge edge : bag ) {
+		Light light = new Light(1, pool);
+		for (Iterable<ColoredDirectedEdge> bag : light.shine(2)) {
+			for (ColoredDirectedEdge edge : bag) {
 				System.out.println(edge);
 			}
 			System.out.println();
@@ -29,21 +36,19 @@ public class JFXHelloWorld extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Hello world");
-		Button btn = new Button();
-		btn.setText("Say 'Hello World'");
-		btn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("Hello world");
-			}
-		});
 
-		StackPane root = new StackPane();
+		window = primaryStage;
 
-		root.getChildren().add(btn);
-		primaryStage.setScene(new Scene(root, 300, 250));
-		primaryStage.show();
+		// TODO these must be taken out later, makes it easier for me to test
+		window.setX(3200.0);
+		window.setY(300.0);
+
+		window.setHeight(stageX);
+		window.setWidth(stageY);
+
+		Films.swap(0);
+
+		window.show();
 	}
 
 }
