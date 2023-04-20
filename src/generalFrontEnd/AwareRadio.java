@@ -8,12 +8,12 @@ import javafx.scene.control.RadioButton;
  *
  */
 public class AwareRadio extends RadioButton{
-	int x, y;
+	int row, column;
 	boolean active = false;
 	
 	public AwareRadio(int row, int column, boolean active) {
-		this.x = row;
-		this.y = column;
+		this.row = row;
+		this.column = column;
 	}
 	
 	public void update(boolean update) {
@@ -21,10 +21,10 @@ public class AwareRadio extends RadioButton{
 	}
 	
 	public int getRow() {
-		return this.x;
+		return this.row;
 	}
 	
 	public int getColumn() {
-		return this.y;	
+		return this.column;	
 	}
 }

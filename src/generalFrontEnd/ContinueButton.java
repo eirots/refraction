@@ -5,14 +5,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 /**
- * Button class specific to this application that moves between scenes when clicked
+ * Button class specific to this application that moves between scenes when
+ * clicked
+ * 
  * @author astorie
  *
  */
-public class ContinueButton extends Button{
-	
-	private int count = 0;
-	
+public class ContinueButton extends Button {
+
 	/**
 	 * Creates a ContinueButton for moving through the Refraction application
 	 */
@@ -22,17 +22,14 @@ public class ContinueButton extends Button{
 
 			@Override
 			/**
-			 * Moves the application forward when the button is clicked. 
+			 * Moves the application forward by dequeuing when the button is clicked.
 			 */
 			public void handle(ActionEvent e) {
-				Films.swap(count);
-				count++;
+				Films.swap();
 			}
-			
+
 		});
-		count = 1;
+
 	}
-	
-	
 
 }

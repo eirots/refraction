@@ -16,8 +16,7 @@ import javafx.stage.Stage;
 import radioBuilder.RadioStart;
 
 public class JFXHelloWorld extends Application {
-	public double stageX = 500;
-	public double stageY = 500;
+	private double stageX = 500;private double stageY = 500;
 	public static Stage window;
 
 	public Scene scenes[] = { new RadioStart().getScene() };
@@ -40,13 +39,12 @@ public class JFXHelloWorld extends Application {
 		window = primaryStage;
 
 		// TODO these must be taken out later, makes it easier for me to test
-		window.setX(3200.0);
-		window.setY(300.0);
+		window.setX(3200.0); window.setY(300.0);
 
-		window.setHeight(stageX);
-		window.setWidth(stageY);
+		window.setHeight(stageX); window.setWidth(stageY);
 
-		Films.swap(0);
+		Films.next(new RadioStart().getScene());
+		Films.swap();
 
 		window.show();
 	}
