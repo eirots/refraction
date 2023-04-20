@@ -27,4 +27,9 @@ public class AwareRadio extends RadioButton{
 	public int getColumn() {
 		return this.column;	
 	}
+	
+	@Override
+	public String toString() {
+		return row + " " + column + " ";
+	}
 }
