@@ -32,7 +32,7 @@ public class RadioStart {
 	}
 
 	/**
-	 * Sets the format
+	 * Sets formatting for children
 	 */
 	private void setFormatting() {
 		ap.prefHeight(500.0);
