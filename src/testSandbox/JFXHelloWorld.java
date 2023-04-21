@@ -5,7 +5,7 @@ import backEnd.Light;
 import backEnd.Pool;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.In;
-import generalFrontEnd.Films;
+import generalFrontEnd.Film;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,11 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import radioBuilder.RadioStart;
+import mixingPaint.RadioStart;
 
 public class JFXHelloWorld extends Application {
-	public double stageX = 500;
-	public double stageY = 500;
+	private double stageX = 500;private double stageY = 500;
 	public static Stage window;
 
 	public Scene scenes[] = { new RadioStart().getScene() };
@@ -40,13 +39,12 @@ public class JFXHelloWorld extends Application {
 		window = primaryStage;
 
 		// TODO these must be taken out later, makes it easier for me to test
-		window.setX(3200.0);
-		window.setY(300.0);
+		window.setX(3200.0); window.setY(300.0);
 
-		window.setHeight(stageX);
-		window.setWidth(stageY);
+		window.setHeight(stageX); window.setWidth(stageY);
 
-		Films.swap(0);
+		Film.next(new RadioStart().getScene());
+		Film.swap();
 
 		window.show();
 	}
