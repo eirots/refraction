@@ -1,15 +1,19 @@
 package generalFrontEnd;
 
+/**
+ * WeightedBlobs ideally should be used with an array of AwareRadios. 
+ * @author astorie
+ *
+ */
 public class WeightedBlob {
 	
 	private int row, column, weight;
 	private boolean selected;
 	
 	/**
-	 * Creates a weighted "blob" that can be later turned into directed edges. Converted from AwareRadio
+	 * Creates a weighted "blob" that can be later turned into directed edges. Converted from AwareRadio. 
 	 * @param radio AwareRadio must be passed  
-	 * @param weight
-	 * @param selected
+	 * @param weight Weight of all edges coming from a node
 	 * @see AwareRadio
 	 */
 	public WeightedBlob(AwareRadio radio, int weight) {

@@ -5,7 +5,7 @@ import backEnd.Light;
 import backEnd.Pool;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.In;
-import generalFrontEnd.Films;
+import generalFrontEnd.Film;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import radioBuilder.RadioStart;
+import mixingPaint.RadioStart;
 
 public class JFXHelloWorld extends Application {
 	private double stageX = 500;private double stageY = 500;
@@ -43,8 +43,8 @@ public class JFXHelloWorld extends Application {
 
 		window.setHeight(stageX); window.setWidth(stageY);
 
-		Films.next(new RadioStart().getScene());
-		Films.swap();
+		Film.next(new RadioStart().getScene());
+		Film.swap();
 
 		window.show();
 	}

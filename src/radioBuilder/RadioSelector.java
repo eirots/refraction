@@ -2,7 +2,8 @@ package radioBuilder;
 
 import generalFrontEnd.AwareRadio;
 import generalFrontEnd.ContinueButton;
-import generalFrontEnd.Films;
+import generalFrontEnd.Film;
+import generalFrontEnd.FormatConstants;
 import generalFrontEnd.RefractionScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,19 +15,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
+import mixingPaint.WeightSelector;
 
 public class RadioSelector implements RefractionScene {
-	Scene scene;
-	BorderPane bp;
-	GridPane gp;
-	Label label;
-	RadPageButton btn;
-	int width, height;
-	AwareRadio[][] radios;
+	private Scene scene;
+	private BorderPane bp;
+	private GridPane gp;
+	private Label label;
+	private RadPageButton btn;
+	private int width, height;
+	private AwareRadio[][] radios;
 	
 
 	public RadioSelector(int width, int height) {
-		this.gp = new GridPane();
+		this.gp = new GridPane();   
 		this.bp = new BorderPane();
 		this.width = width;
 		this.height = height;
@@ -49,13 +51,14 @@ public class RadioSelector implements RefractionScene {
 					for (int row = 0; row < width; row++) {
 						for (int col = 0; col < height; col++) {
 							if(radios[row][col].isSelected()) {
-								radios[row][col].update(true);
-								System.out.println(radios[row][col]);
+								radios[row][col].setActive();
+								System.out.println(radios[row][col].printableToString());
+								
 							}
 						}
-						
 					}
-					Films.swap();
+					Film.next(new WeightSelector(radios, width, height).getScene());
+					Film.swap();
 				}
 			});
 		}
@@ -65,15 +68,12 @@ public class RadioSelector implements RefractionScene {
 	/**
 	 * Makes radios from previously selected width and height
 	 */
-	private void makeRadios() {
-		int layoutX = 10;
-		int layoutY = 40;
-		
+	private void makeRadios() {	
 		for (int row = 0; row < width; row++) {
 			for (int col = 0; col < height; col++) {
-				radios[row][col] = new AwareRadio(row, col, false);
-				radios[row][col].setLayoutX(layoutX + (row * 30));
-				radios[row][col].setLayoutY(layoutY + (col * 30));
+				radios[row][col] = new AwareRadio(row, col);
+				radios[row][col].setLayoutX(FormatConstants.GRID_X + (row * 30));
+				radios[row][col].setLayoutY(FormatConstants.GRID_Y + (col * 30));
 				radios[row][col].setAlignment(Pos.CENTER);
 				gp.add(radios[row][col], row, col);
 				GridPane.setHgrow(radios[row][col], Priority.ALWAYS);
@@ -88,11 +88,10 @@ public class RadioSelector implements RefractionScene {
 	 * Sets formatting for children
 	 */
 	private void setFormatting() {
-
-		bp.prefHeight(500.0);
-		bp.prefWidth(500.0);
-		gp.prefHeight(250);
-		gp.prefWidth(250);
+		bp.prefHeight(FormatConstants.SCENE_HEIGHT);
+		bp.prefWidth(FormatConstants.SCENE_WIDTH);
+		gp.prefHeight(FormatConstants.GP_HEIGHT);
+		gp.prefWidth(FormatConstants.GP_WIDTH);
 
 		label = new Label();
 		label.setLayoutX(15);
@@ -111,7 +110,7 @@ public class RadioSelector implements RefractionScene {
 		BorderPane.setAlignment(label, Pos.CENTER);
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		BorderPane.setAlignment(btn, Pos.CENTER);
-		BorderPane.setMargin(gp, new Insets(50, 50, 50, 50));
+		BorderPane.setMargin(gp, FormatConstants.BP_MARGINS);
 		
 		// debug line gp.setBorder(new Border(new BorderStroke(Paint.valueOf("BLACK"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
