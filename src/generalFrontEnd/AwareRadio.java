@@ -3,29 +3,42 @@ package generalFrontEnd;
 import javafx.scene.control.RadioButton;
 
 /**
- * Useful when making a grid of Radio buttons. 
+ * Class that is useful when making a grid of Radio buttons without grouping. Used in tandem with WeightedBlob
+ * 
+ * @see WeightedBlob
  * @author astorie
  *
  */
 public class AwareRadio extends RadioButton{
-	int row, column;
-	boolean active = false;
+	private int row, column;
+	private boolean active;
 	
-	public AwareRadio(int row, int column, boolean active) {
+	/**
+	 * 
+	 * @param row X position in grid 
+	 * @param column Y position in grid
+	 * @param active 
+	 */
+	public AwareRadio(int row, int column) {
 		this.row = row;
 		this.column = column;
+		active = false;
 	}
 	
-	public void update(boolean update) {
-		this.active = update;
+	public void setActive() {
+		this.active = true;
 	}
 	
 	public int getRow() {
-		return this.row;
+		return row;
 	}
 	
 	public int getColumn() {
-		return this.column;	
+		return column;	
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 	
 	public String printableToString() {
