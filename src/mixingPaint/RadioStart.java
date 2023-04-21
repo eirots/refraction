@@ -94,15 +94,15 @@ public class RadioStart implements RefractionScene {
 	private void moveToRadioSelector() {
 		if (height.getValue() != null && width.getValue() != null) {
 
-			//delay is needed in case both width and height try to grab at the same time, this can cause an exception to fire
-			
+			// delay is needed in case both width and height try to grab at the same time,
+			// this can cause an exception to fire
 
 			btn.setLayoutX(FormatConstants.BTN_X);
 			btn.setLayoutY(FormatConstants.BTN_Y);
 			btn.setText("Submit");
 			btn.setDisable(false);
 			btn.setOnAction(new EventHandler<ActionEvent>() {
-				
+
 				@Override
 				public void handle(ActionEvent e) {
 					Film.next(new RadioSelector(width.getValue(), height.getValue()).getScene());

@@ -25,10 +25,9 @@ public class RadioSelector implements RefractionScene {
 	private RadPageButton btn;
 	private int width, height;
 	private AwareRadio[][] radios;
-	
 
 	public RadioSelector(int width, int height) {
-		this.gp = new GridPane();   
+		this.gp = new GridPane();
 		this.bp = new BorderPane();
 		this.width = width;
 		this.height = height;
@@ -39,21 +38,21 @@ public class RadioSelector implements RefractionScene {
 
 		this.scene = new Scene(bp);
 	}
-	
+
 	private class RadPageButton extends ContinueButton {
-		
+
 		public RadPageButton() {
 			super();
-			
+
 			super.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
 					for (int row = 0; row < width; row++) {
 						for (int col = 0; col < height; col++) {
-							if(radios[row][col].isSelected()) {
+							if (radios[row][col].isSelected()) {
 								radios[row][col].setActive();
 								System.out.println(radios[row][col].printableToString());
-								
+
 							}
 						}
 					}
@@ -62,13 +61,13 @@ public class RadioSelector implements RefractionScene {
 				}
 			});
 		}
-		
+
 	}
 
 	/**
 	 * Makes radios from previously selected width and height
 	 */
-	private void makeRadios() {	
+	private void makeRadios() {
 		for (int row = 0; row < width; row++) {
 			for (int col = 0; col < height; col++) {
 				radios[row][col] = new AwareRadio(row, col);
@@ -79,7 +78,7 @@ public class RadioSelector implements RefractionScene {
 				GridPane.setHgrow(radios[row][col], Priority.ALWAYS);
 				GridPane.setVgrow(radios[row][col], Priority.ALWAYS);
 			}
-			
+
 		}
 
 	}
@@ -103,7 +102,7 @@ public class RadioSelector implements RefractionScene {
 		btn.setLayoutX(208);
 		btn.setLayoutY(393);
 		btn.setText("Submit");
-	
+
 		bp.setTop(label);
 		bp.setCenter(gp);
 		bp.setBottom(btn);
@@ -111,8 +110,9 @@ public class RadioSelector implements RefractionScene {
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		BorderPane.setAlignment(btn, Pos.CENTER);
 		BorderPane.setMargin(gp, FormatConstants.BP_MARGINS);
-		
-		// debug line gp.setBorder(new Border(new BorderStroke(Paint.valueOf("BLACK"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+		// debug line gp.setBorder(new Border(new BorderStroke(Paint.valueOf("BLACK"),
+		// BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
 
 	/**
