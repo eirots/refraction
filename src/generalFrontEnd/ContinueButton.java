@@ -25,7 +25,7 @@ public class ContinueButton extends Button {
 			 * Moves the application forward by dequeuing when the button is clicked.
 			 */
 			public void handle(ActionEvent e) {
-				Films.swap();
+				Film.swap();
 			}
 
 		});

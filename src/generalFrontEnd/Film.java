@@ -2,7 +2,7 @@ package generalFrontEnd;
 
 import edu.princeton.cs.algs4.Queue;
 import javafx.scene.Scene;
-import radioBuilder.RadioStart;
+import mixingPaint.RadioStart;
 import testSandbox.JFXHelloWorld;
 
 /**
@@ -11,11 +11,11 @@ import testSandbox.JFXHelloWorld;
  * @author astorie
  *
  */
-public class Films {
+public class Film {
 	
 	private static Queue<Scene> sceneQueue = new Queue<>();
 	
-	public Films() {
+	public Film() {
 		
 	}
 	
