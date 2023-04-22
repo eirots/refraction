@@ -42,6 +42,6 @@ public class AwareRadio extends RadioButton{
 	}
 	
 	public String printableToString() {
-		return "row: " + row + " " + " column: " + column + " " + active;
+		return "row: " + row + " " + " column: " + column + " " + active + "\n";
 	}
 }

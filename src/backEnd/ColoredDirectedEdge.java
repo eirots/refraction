@@ -2,7 +2,7 @@ package backEnd;
 
 import edu.princeton.cs.algs4.DirectedEdge;
 /**
- * Functions as a normal DirectedEdge would Howerver this contains variable fields for RGB color values
+ * Functions as a normal DirectedEdge would However this contains variable fields for RGB color values
  * @author Spencer Peck
  *
  */

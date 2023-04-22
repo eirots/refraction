@@ -1,5 +1,7 @@
 package mixingPaint;
 
+import java.util.ArrayList;
+
 import generalFrontEnd.AwareRadio;
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.Film;
@@ -10,12 +12,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 
 /**
@@ -27,12 +30,13 @@ import javafx.scene.text.Font;
 public class WeightSelector implements RefractionScene {
 	private Scene scene;
 	private AwareRadio radios[][];
-	private WeightedBlob blobs[][];
+	private ArrayList<WeightedBlob> blobs;
 	private WeightedButton btn;
 	private BorderPane bp;
 	private GridPane gp;
 	private Label label;
 	private int width, height;
+	private ArrayList<ComboBox<Integer>> cbList;
 	
 
 	/**
@@ -57,18 +61,37 @@ public class WeightSelector implements RefractionScene {
 	private void makeDropDowns() {
 		ObservableList<Integer> weightOptions = FXCollections.observableArrayList(
 				2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+		//Label garbLabel;
+		ComboBox<Integer> cb;
+		cbList = new ArrayList<ComboBox<Integer>>();
 		
 		for (int row = 0; row < width; row++) {
 			for (int col = 0; col < height; col++) {
+				cb = new ComboBox<Integer>(weightOptions);
 				if (radios[row][col].isActive()) {
+					cb.setDisable(false);
+				}else {
+					cb.setDisable(true);
+					cb.setValue(1);
 					
-					
-
 				}
+				if(cbList.add(cb)) {
+					System.out.println("added " + " to "+ cbList.size());
+				}
+				gp.add(cb, row, col);
+				GridPane.setHgrow(cb, Priority.ALWAYS);
+				GridPane.setVgrow(cb, Priority.ALWAYS);
 			}
 		}
 		
-
+		
+	}
+	
+	private ArrayList<WeightedBlob> getBlobList(){
+		if(blobs == null) {
+			blobs = new ArrayList<>();
+		}
+		return blobs;
 	}
 
 	private void setFormatting() {
@@ -95,7 +118,7 @@ public class WeightSelector implements RefractionScene {
 		BorderPane.setAlignment(label, Pos.CENTER);
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		BorderPane.setAlignment(btn, Pos.CENTER);
-		BorderPane.setMargin(gp, new Insets(50, 50, 50, 50));
+		BorderPane.setMargin(gp, FormatConstants.BP_MARGINS);
 
 		// debug line gp.setBorder(new Border(new BorderStroke(Paint.valueOf("BLACK"),
 		// BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -115,12 +138,28 @@ public class WeightSelector implements RefractionScene {
 
 		public WeightedButton() {
 			super();
-
+			
 			super.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
+					ArrayList<WeightedBlob> blobs = getBlobList();
+					
 					for (int row = 0; row < width; row++) {
 						for (int col = 0; col < height; col++) {
+							//flattening 2d array to be parsed by 
+							ComboBox <Integer> cb = cbList.get((row * width) + row);
+							//System.out.println((row * radios[1].length) + row);
+							System.out.println(height);
+							System.out.println("adding from index " + ((row * width) + col));
+							 
+							
+							blobs.add(new WeightedBlob(radios[row][col], cb.getValue(), cbList.indexOf(cb)));
+							
+							
+							//add blob index 
+							//
+							
+							
 							/*
 							 * if(radios[row][col].isSelected()) { radios[row][col].setActive();
 							 * System.out.println(radios[row][col].printableToString());
@@ -130,6 +169,10 @@ public class WeightSelector implements RefractionScene {
 						}
 					}
 					// Film.next(new WeightSelector(radios).getScene());
+					//devline below
+					for(WeightedBlob blob: blobs) {
+						System.out.println(blob.toString());
+					}
 					Film.swap();
 				}
 			});
