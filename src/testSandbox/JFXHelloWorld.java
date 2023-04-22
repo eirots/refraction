@@ -22,7 +22,7 @@ public class JFXHelloWorld extends Application {
 	public Scene scenes[] = { new RadioStart().getScene() };
 
 	public static void main(String[] args) {
-		Pool pool = new Pool(new In("src/backEnd/resources/gridGraph.txt"));
+		Pool pool = new Pool(new In("src/backEnd/resources/gridGraph.txt"),"#"," ");
 		Light light = new Light(1, pool);
 		for (Iterable<ColoredDirectedEdge> bag : light.shine(2)) {
 			for (ColoredDirectedEdge edge : bag) {
