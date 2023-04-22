@@ -7,7 +7,7 @@ package generalFrontEnd;
  */
 public class WeightedBlob {
 	
-	private int row, column, weight;
+	private int row, column, weight, index;
 	private boolean selected;
 	
 	/**
@@ -16,10 +16,12 @@ public class WeightedBlob {
 	 * @param weight Weight of all edges coming from a node
 	 * @see AwareRadio
 	 */
-	public WeightedBlob(AwareRadio radio, int weight) {
+	public WeightedBlob(AwareRadio radio, int weight, int index) {
 		row = radio.getRow();
 		column = radio.getColumn();
 		selected = radio.isActive();	
+		this.weight = weight;
+		this.index = index;
 	}
 	
 	public int getRow() {
@@ -38,4 +40,8 @@ public class WeightedBlob {
 		return selected;
 	}
 	
+	@Override
+	public String toString() {
+		return "blob at row:" + row + "||  col: " + column + "|| weight: " + weight;
+	}
 }
