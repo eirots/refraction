@@ -1,10 +1,18 @@
 package mixingPaint;
 
+import java.util.ArrayList;
+
+import backEnd.ColoredDirectedEdge;
+import backEnd.Light;
 import backEnd.Pool;
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.DirectedEdge;
+import edu.princeton.cs.algs4.In;
 import generalFrontEnd.AwareRadio;
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.FormatConstants;
 import generalFrontEnd.RefractionScene;
+import generalFrontEnd.WeightedBlob;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -17,6 +25,7 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.text.Font;
 
+
 public class PoolDisplay implements RefractionScene {
 
 	private Scene scene;
@@ -28,15 +37,17 @@ public class PoolDisplay implements RefractionScene {
 	private ContinueButton btn;
 	private Canvas canvas;
 	private GraphicsContext gc;
+	ArrayList<WeightedBlob> blobs;
 
 	private int width, height;
 	private AwareRadio[][] radios;
 	private Pool pool;
 
-	public PoolDisplay(Pool p, int width, int height) {
+	public PoolDisplay(Pool p, Iterable<WeightedBlob> blobs, int width, int height) {
 		this.pool = p;
 		this.width = width;
 		this.height = height;
+		this.blobs = (ArrayList<WeightedBlob>) blobs;
 
 		setFormatting();
 		drawPool();
@@ -46,13 +57,43 @@ public class PoolDisplay implements RefractionScene {
 
 	private void drawPool() {
 		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, width * 100, height * 100);
-		System.out.println("drawing the rectangle");
-		// gc.beginPath();// use pathto and moveto to draw the path
+		int scale = 2;
+		
+		
+		
+		
+		for(WeightedBlob b: blobs) {
+			double ovalSize = .8* Math.min(FormatConstants.SCENE_WIDTH, FormatConstants.SCENE_HEIGHT) / (double) blobs.size(); // calculate oval size based on window size
+	        double x = (gc.getCanvas().getWidth() / 4) + (b.getColumn() * ovalSize) + (ovalSize / 2); // calculate x coordinate with centered alignment
+	        double y = (gc.getCanvas().getHeight() / 4) + (b.getRow() * ovalSize) + (ovalSize / 2); // calculate y coordinate with centered alignment
+
+	        gc.fillOval(x, y, ovalSize, ovalSize); // draw the oval
+		}
 	}
 
 	private void drawPath() {
-
+		//Bag<Iterable<DirectedEdge>> lightPath = pool.refractPath(0);
+		Light light = new Light(1, pool);
+		int x1, y1, x2, y2;
+		
+		//gc.beginPath();
+		//use strokeLine instead
+		
+		for (Iterable<ColoredDirectedEdge> bag : light.shine(0)) {
+			for (ColoredDirectedEdge edge : bag) {
+				x1 = blobs.get(edge.to()).getColumn();
+				y1 = blobs.get(edge.to()).getRow();
+				x2 = blobs.get(edge.from()).getColumn();
+				y2 = blobs.get(edge.from()).getRow();
+				
+				gc.setStroke(new Color(edge.getR(), edge.getB(), edge.getG(), 1));
+				
+				gc.strokeLine(x1, y1, x2, y2); //doublex1 double y1 double x2 double y2 stroke a line using the current stroke paint.  
+			}
+			System.out.println();
+		}
+		
+		
 	}
 
 	private void setFormatting() {
@@ -60,7 +101,10 @@ public class PoolDisplay implements RefractionScene {
 		bp.prefHeight(FormatConstants.SCENE_HEIGHT);
 		bp.prefWidth(FormatConstants.SCENE_WIDTH);
 		
-		 pane = new Pane();
+		pane = new Pane();
+		pane.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px;");
+		pane.setPrefWidth(FormatConstants.GP_WIDTH);
+		pane.setPrefHeight(FormatConstants.GP_HEIGHT);
 		bp.setCenter(pane);
 
 		canvas = new Canvas();
@@ -88,7 +132,7 @@ public class PoolDisplay implements RefractionScene {
 		label = new Label();
 		label.setLayoutX(15);
 		label.setLayoutY(15);
-		label.setText("BLOB PAGE");
+		label.setText("DISPLAY PAGE");
 		label.setFont(new Font(18));
 
 		btn = new ContinueButton();
@@ -96,7 +140,7 @@ public class PoolDisplay implements RefractionScene {
 		btn.setLayoutY(393);
 		btn.setText("Submit");
 
-		// bp.setTop(label);
+		bp.setTop(label);
 
 		
 		// bp.setCenter(canvas);
