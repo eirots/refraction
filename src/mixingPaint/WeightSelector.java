@@ -147,6 +147,7 @@ public class WeightSelector implements RefractionScene {
 				@Override
 				public void handle(ActionEvent e) {
 					Queue<WeightedBlob> blobs = getBlobList();
+					ArrayList<WeightedBlob> listOfBlobs = new ArrayList<>();
 					AwareRadio flatRadios[] = new AwareRadio[height * width];
 
 					// flattening this 2D arr to make it easier to work with in next part
@@ -161,7 +162,9 @@ public class WeightSelector implements RefractionScene {
 
 					for (int i = 0; i < flatRadios.length; i++) {
 						ComboBox<Integer> cb = cbList.get(i);
-						blobs.enqueue(new WeightedBlob(flatRadios[i], cb.getValue(), cbList.indexOf(cb)));
+						WeightedBlob temp = new WeightedBlob(flatRadios[i], cb.getValue(), cbList.indexOf(cb));
+						blobs.enqueue(temp);
+						listOfBlobs.add(temp);
 					}
 
 					// System.out.println(blobs);
@@ -171,7 +174,7 @@ public class WeightSelector implements RefractionScene {
 						System.out.println(blob.toString());
 					}
 
-					Film.next(new PoolDisplay(new Pool(width, height, blobs), width, height).getScene());
+					Film.next(new PoolDisplay(new Pool(width, height, blobs), listOfBlobs, width, height).getScene());
 					Film.swap();
 				}
 			});
