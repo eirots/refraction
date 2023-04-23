@@ -1,4 +1,4 @@
-package mixingPaint;
+package radioBuilder;
 
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.Film;
@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
-import radioBuilder.RadioSelector;
 
 /**
  * Creates a Scene Graph for the first page in the application.
@@ -72,20 +71,23 @@ public class RadioStart implements RefractionScene {
 		 */
 		// TODO uncomment this line when ready to go
 		// btn.setDisable(true);
+		
 
 		width = new ComboBox<>(widthOptions);
 		width.setLayoutX(155);
 		width.setLayoutY(282);
 		width.setPromptText("Width");
 		width.setOnAction((ActionEvent e) -> moveToRadioSelector());
-		width.getSelectionModel().select(3); // TODO remove this line
+		//width.getSelectionModel().select(3); // TODO remove this line
+		width.setPromptText("width");
 
 		height = new ComboBox<>(heightOptions);
 		height.setLayoutX(155);
 		height.setLayoutY(310);
 		height.setPromptText("Height");
-		height.getSelectionModel().select(3); // TODO remove this line
+		//height.getSelectionModel().select(3); // TODO remove this line
 		height.setOnAction((ActionEvent e) -> moveToRadioSelector());
+		height.setPromptText("height");
 	}
 
 	/**
