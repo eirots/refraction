@@ -22,8 +22,28 @@ public class Pool {
 	private EdgeWeightedDigraph diagraph;
 	private int numOfColumns;
 	private int rows;
-	
-	public Pool(In in, int maxWeight) {
+
+	public Pool(int rows, int columns){
+		Out out = new Out("src/backEnd/resources/poolBuilder.txt");
+		out.println(columns);
+		out.println(rows);
+		out.println(rows*columns);
+		out.println(((rows-1)*columns) + ((rows-1)*3));
+		for( int i = 0; i < rows*columns; i++) {
+			if(i % rows == 0){
+				out.print(" #");
+			}
+			out.print(" " + i);
+		}
+		out.print(" #");
+		buildGraphRandom(new In("src/backEnd/resources/poolBuilder.txt"));
+	}
+
+	public Pool(In in) {
+		buildGraphRandom(in);
+	}
+
+	private void buildGraphRandom(In in) {
 		Queue<String> intakeQueue = new Queue<String>();
 		Queue<String> primaryQueue = new Queue<String>();
 		Queue<String> secondaryQueue = new Queue<String>();
@@ -35,8 +55,8 @@ public class Pool {
 		}
 		numOfColumns = Integer.parseInt(intakeQueue.dequeue());
 		rows = Integer.parseInt(intakeQueue.dequeue());
-		String fileName = "src/backEnd/resources/poolBuilder.txt";
-		Out out = new Out(fileName);
+		String poolBuilderFile = "src/backEnd/resources/poolBuilder.txt";
+		Out out = new Out(poolBuilderFile);
 		out.println(intakeQueue.dequeue());//Output Number Of Vertices
 		out.println(intakeQueue.dequeue());//Output Number Of Edges
 		
@@ -49,7 +69,7 @@ public class Pool {
 		while(!intakeQueue.isEmpty()) {
 			intakePop = intakeQueue.dequeue();
 			if(!intakeQueue.isEmpty() && !intakeQueue.peek().equals("#") && !intakePop.equals("#")) {
-				weight = StdRandom.uniformInt(maxWeight);
+				weight = StdRandom.uniformInt(20);
 				out.println(intakePop + " " + intakeQueue.peek() + " " + weight);
 				out.println(intakeQueue.peek() + " " + intakePop + " " + weight);
 			}
@@ -60,15 +80,15 @@ public class Pool {
 					secondaryPop = secondaryQueue.dequeue();
 					primaryPop = primaryQueue.dequeue();
 					if(!secondaryQueue.isEmpty()) {
-						weight = StdRandom.uniformInt(maxWeight);
+						weight = StdRandom.uniformInt(20);
 						out.println(primaryPop + " " + secondaryQueue.peek() + " " + weight);
 						out.println(secondaryQueue.peek() + " " + primaryPop + " " + weight);
 
-						weight = StdRandom.uniformInt(maxWeight);
+						weight = StdRandom.uniformInt(20);
 						out.println(secondaryPop + " " + primaryQueue.peek() + " " + weight);
 						out.println(primaryQueue.peek() + " " + secondaryPop + " " + weight);
 
-						weight = StdRandom.uniformInt(maxWeight);
+						weight = StdRandom.uniformInt(20);
 						out.println(secondaryQueue.peek() + " " + primaryQueue.peek() + " " + weight);
 						out.println(primaryQueue.peek() + " " + secondaryQueue.peek() + " " + weight);
 					}
@@ -86,10 +106,84 @@ public class Pool {
 			}
 		}
 		out.close();
-		this.diagraph = new EdgeWeightedDigraph(new In(fileName));
+		this.diagraph = new EdgeWeightedDigraph(new In(poolBuilderFile));
 	}
+	
+	private void buildGraphBlobs(In in,Queue<DirectedEdge>blobs) {
+		Queue<String> intakeQueue = new Queue<String>();
+		Queue<String> primaryQueue = new Queue<String>();
+		Queue<String> secondaryQueue = new Queue<String>();
+		
+		while(!in.isEmpty()) {
+			for(String el: in.readLine().split(" ")) {
+				intakeQueue.enqueue(el);
+			}
+		}
+		numOfColumns = Integer.parseInt(intakeQueue.dequeue());
+		rows = Integer.parseInt(intakeQueue.dequeue());
+		String poolBuilderFile = "src/backEnd/resources/poolBuilder.txt";
+		Out out = new Out(poolBuilderFile);
+		out.println(intakeQueue.dequeue());//Output Number Of Vertices
+		out.println(intakeQueue.dequeue());//Output Number Of Edges
+		
+		String intakePop;
+		String primaryPop;
+		String secondaryPop;
+		boolean delim = false;
+		int weight;
+		
+		while(!intakeQueue.isEmpty()) {
+			intakePop = intakeQueue.dequeue();
+			if(!intakeQueue.isEmpty() && !intakeQueue.peek().equals("#") && !intakePop.equals("#")) {
+				for(DirectedEdge edge: blobs) {
+					if(edge.from() == Integer.parseInt(intakePop)) {
+						weight = edge.weight();
+					}
+				}
+				weight = StdRandom.uniformInt(20);
+				out.println(intakePop + " " + intakeQueue.peek() + " " + weight);
+				out.println(intakeQueue.peek() + " " + intakePop + " " + weight);
+			}
+			
+			if(intakePop.equals("#")) {
+				delim = true;
+				while(!secondaryQueue.isEmpty()) {
+					secondaryPop = secondaryQueue.dequeue();
+					primaryPop = primaryQueue.dequeue();
+					if(!secondaryQueue.isEmpty()) {
+						weight = StdRandom.uniformInt(20);
+						out.println(primaryPop + " " + secondaryQueue.peek() + " " + weight);
+						out.println(secondaryQueue.peek() + " " + primaryPop + " " + weight);
+
+						weight = StdRandom.uniformInt(20);
+						out.println(secondaryPop + " " + primaryQueue.peek() + " " + weight);
+						out.println(primaryQueue.peek() + " " + secondaryPop + " " + weight);
+
+						weight = StdRandom.uniformInt(20);
+						out.println(secondaryQueue.peek() + " " + primaryQueue.peek() + " " + weight);
+						out.println(primaryQueue.peek() + " " + secondaryQueue.peek() + " " + weight);
+					}
+					primaryQueue.enqueue(secondaryPop);
+				}
+			}
+			
+			else {
+				if(delim == false) {
+					primaryQueue.enqueue(intakePop);
+				}
+				else {
+					secondaryQueue.enqueue(intakePop);
+				}
+			}
+		}
+		out.close();
+		this.diagraph = new EdgeWeightedDigraph(new In(poolBuilderFile));
+	}
+	public Pool(In file, Queue<String>blobs) {
+	}
+	
 	/**
-	 * Refact Path calculates the shortest paths from the provided source to all of the vertexes on the other side of the graph
+	 * Refract Path calculates the shortest paths from the provided source to all of the vertexes on the other side of the graph
 	 * @param sourceVertex is where all the calculated paths will start from
 	 * @return an iterable collection of paths.
 	 */
@@ -102,6 +196,12 @@ public class Pool {
 		}
 		return bag;
 		
+	}
+	public static int getIndexFromXY(int vertexXCord, int vertexYCord, int rowsInPool, int columnsInPool) {
+		if(vertexXCord > columnsInPool || vertexXCord < 1 || vertexYCord < 1 || vertexYCord > rowsInPool) {
+			throw new IllegalArgumentException("X & Y Cords must be within the pool boundries");
+		}
+		return  (vertexYCord + ((vertexXCord-1)*rowsInPool))-1;
 	}
 	
 	public int getRowCount() {
