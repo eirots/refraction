@@ -24,6 +24,10 @@ public class WeightedBlob {
 		this.index = index;
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+
 	public int getRow() {
 		return row; 
 	}

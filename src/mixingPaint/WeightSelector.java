@@ -148,7 +148,7 @@ public class WeightSelector implements RefractionScene {
 						for (int col = 0; col < height; col++) {
 							//flattening 2d array to be parsed by 
 							ComboBox <Integer> cb = cbList.get((row * width) + row);
-							//System.out.println((row * radios[1].length) + row);
+							
 							System.out.println(height);
 							System.out.println("adding from index " + ((row * width) + col));
 							 
