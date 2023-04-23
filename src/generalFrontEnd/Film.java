@@ -2,7 +2,7 @@ package generalFrontEnd;
 
 import edu.princeton.cs.algs4.Queue;
 import javafx.scene.Scene;
-import mixingPaint.RadioStart;
+import radioBuilder.RadioStart;
 import testSandbox.JFXHelloWorld;
 
 /**

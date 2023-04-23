@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import mixingPaint.RadioStart;
+import radioBuilder.RadioStart;
 
 public class JFXHelloWorld extends Application {
 	private double stageX = 500;private double stageY = 500;

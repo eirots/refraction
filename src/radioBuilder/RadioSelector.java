@@ -70,7 +70,8 @@ public class RadioSelector implements RefractionScene {
 	private void makeRadios() {
 		for (int row = 0; row < width; row++) {
 			for (int col = 0; col < height; col++) {
-				radios[row][col] = new AwareRadio(row, col);
+				System.out.println("row: " + row + "    col: " + col );
+				radios[row][col] = new AwareRadio(col, row);
 				radios[row][col].setLayoutX(FormatConstants.GRID_X + (row * 30));
 				radios[row][col].setLayoutY(FormatConstants.GRID_Y + (col * 30));
 				radios[row][col].setAlignment(Pos.CENTER);
