@@ -83,8 +83,8 @@ public class Pool {
 		
 		numOfColumns = Integer.parseInt(intakeQueue.dequeue());//Record the Number of Columns
 		rows = Integer.parseInt(intakeQueue.dequeue());//Record the Number of Rows
-		String poolBuilderFile = "src/backEnd/resources/poolBuilder.txt";
-		Out out = new Out(poolBuilderFile); //Needed for formatting a file to match the requirements of a Algs4 diagraph.
+		String graphBuilderFile = "src/backEnd/resources/graphBuilder.txt";
+		Out out = new Out(graphBuilderFile); //Needed for formatting a file to match the requirements of a Algs4 diagraph.
 		out.println(intakeQueue.dequeue());//Output Number Of Vertices
 		out.println(intakeQueue.dequeue());//Output Number Of Edges
 		
@@ -134,7 +134,7 @@ public class Pool {
 			}
 		}
 		out.close();
-		this.diagraph = new EdgeWeightedDigraph(new In(poolBuilderFile));
+		this.diagraph = new EdgeWeightedDigraph(new In(graphBuilderFile));
 	}
 	
 	/**
@@ -155,8 +155,8 @@ public class Pool {
 		}
 		numOfColumns = Integer.parseInt(intakeQueue.dequeue());
 		rows = Integer.parseInt(intakeQueue.dequeue());
-		String poolBuilderFile = "src/backEnd/resources/poolBuilder.txt";
-		Out out = new Out(poolBuilderFile);
+		String graphBuilderFile = "src/backEnd/resources/graphBuilder.txt";
+		Out out = new Out(graphBuilderFile);
 		out.println(intakeQueue.dequeue());//Output Number Of Vertices
 		out.println(intakeQueue.dequeue());//Output Number Of Edges
 		
@@ -209,7 +209,7 @@ public class Pool {
 			}
 		}
 		out.close();
-		this.diagraph = new EdgeWeightedDigraph(new In(poolBuilderFile));
+		this.diagraph = new EdgeWeightedDigraph(new In(graphBuilderFile));
 	}
 
 	/**
@@ -248,8 +248,9 @@ public class Pool {
 		out.println(rows);
 		out.println(rows*columns);
 		out.println(((rows-1)*columns) + ((rows-1)*3));
-		for( int i = 0; i < rows*columns; i++) {
-			if(i % rows == 0){
+		out.print("0");
+		for( int i = 1; i < rows*columns; i++) {
+			if(i % rows == 0 && i != 0){
 				out.print(" #"); //Standard delimiter
 			}
 			out.print(" " + i);
