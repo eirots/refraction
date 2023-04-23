@@ -1,6 +1,7 @@
 package mixingPaint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import generalFrontEnd.AwareRadio;
 import generalFrontEnd.ContinueButton;
@@ -72,7 +73,7 @@ public class WeightSelector implements RefractionScene {
 					cb.setDisable(false);
 				}else {
 					cb.setDisable(true);
-					cb.setValue(1);
+					cb.setValue(5);
 					
 				}
 				if(cbList.add(cb)) {
@@ -143,17 +144,43 @@ public class WeightSelector implements RefractionScene {
 				@Override
 				public void handle(ActionEvent e) {
 					ArrayList<WeightedBlob> blobs = getBlobList();
+					AwareRadio flatRadios[] = new AwareRadio	[height * width];
 					
-					for (int row = 0; row < width; row++) {
-						for (int col = 0; col < height; col++) {
-							//flattening 2d array to be parsed by 
+					//flatten this to make it easier to work with in next part 
+					int index = 0;
+					for(int i = 0; i<width;i++) {
+						for(int j = 0; j<height; j++) {
+						 flatRadios[index] = radios[i][j];
+						 System.out.println(flatRadios[index].printableToString());
+						 index++;
+						}
+					}
+					
+					for(int i = 0; i<flatRadios.length; i++) {
+						ComboBox<Integer> cb = cbList.get(i);
+						blobs.add(new WeightedBlob(flatRadios[i], cb.getValue(), cbList.indexOf(cb)));
+						
+						//System.out.println(blobs.get(i));
+					}
+					
+					System.out.println(blobs);
+					
+					
+					//for (int row = 0; row < width; row++) {
+					//	for (int col = 0; col < height; col++) {
+							/**
+							 * //flattening 2d array to be parsed by 
+							
 							ComboBox <Integer> cb = cbList.get((row * width) + row);
+							
+							//flattening array a different way
+							
 							
 							System.out.println(height);
 							System.out.println("adding from index " + ((row * width) + col));
 							 
 							
-							blobs.add(new WeightedBlob(radios[row][col], cb.getValue(), cbList.indexOf(cb)));
+							
 							
 							
 							//add blob index 
@@ -166,8 +193,9 @@ public class WeightSelector implements RefractionScene {
 							 * 
 							 * }
 							 */
-						}
-					}
+							 
+						//}
+					//}
 					// Film.next(new WeightSelector(radios).getScene());
 					//devline below
 					for(WeightedBlob blob: blobs) {
