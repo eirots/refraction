@@ -5,10 +5,9 @@ import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 
 /**
- * 
- * TODO Heavy Duty Testing
+ * Light mimics the behavior of light passing through a liquid. This light will be passed through a pool of liquid. 
+ * its color output will change depending on the resistance needed to pass through the pool.
  * TODO Balance Weight/light intensity to create better color transitions
- * TODO Better Comments
  * @author Spencer Peck
  *
  */
@@ -17,15 +16,22 @@ public class Light {
 	private Stack<Integer> colorQueue = new Stack<>();
 	private Pool pool;
 	
+	/**
+	 * Creates a Light with a specified pool and light intensity.
+	 * @param lightIntensity. How strong the light is and how well it can overcome the pool's resistance.
+	 * Lower values will lead to more drastic outputs
+	 * @param The Pool the light will pass through.
+	 */
 	public Light(int lightIntensity,Pool pool) {
 		this.lightIntensity = lightIntensity;
 		this.pool = pool;
 	}
 	
 	/**
-	 * Build and return the shortest path(s)
-	 * @param sourceNode
-	 * @return
+	 * Tests the shortest paths through the Light's pool starting from a specified vertex.
+	 * Outputs a queue of edges that make up the path and the color change through the pool.
+	 * @param sourceNode. The starting Point of the light
+	 * @return A Queue of edges that contain RGB values, that make up the shortest paths through the pool
 	 */
 	public Queue<Iterable<ColoredDirectedEdge>> shine(int sourceNode) {
 		
@@ -60,9 +66,10 @@ public class Light {
 	}
 	
 	/**
-	 * Transmute edges into color edges
-	 * @param path
-	 * @return
+	 * Changes any edges it is provided with into edges with RGB values based off of the edge-
+	 * weight and the color and intensity of the light
+	 * @param Iterable of DirectedEdges with RGB
+	 * @return Queue of DirectedEdges with RGB
 	 */
 	private Iterable<ColoredDirectedEdge> colorPath(Iterable<DirectedEdge> path) {
 		Queue<ColoredDirectedEdge> coloredPath = new Queue<>();
