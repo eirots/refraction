@@ -7,7 +7,6 @@ import backEnd.Light;
 import backEnd.Pool;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.DirectedEdge;
-import edu.princeton.cs.algs4.In;
 import generalFrontEnd.AwareRadio;
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.FormatConstants;
@@ -31,6 +30,7 @@ public class PoolDisplay implements RefractionScene {
 	private Scene scene;
 	private BorderPane bp;
 	private Pane pane;
+	private double ovalSize;
 
 	// private GridPane gp;
 	private Label label;
@@ -48,53 +48,66 @@ public class PoolDisplay implements RefractionScene {
 		this.width = width;
 		this.height = height;
 		this.blobs = (ArrayList<WeightedBlob>) blobs;
+		setOvalSize();
 
 		setFormatting();
 		drawPool();
+		//drawPath();
 
 		scene = new Scene(bp);
+	}
+	
+	private void setOvalSize(){
+		ovalSize = .8* Math.min(FormatConstants.SCENE_WIDTH, FormatConstants.SCENE_HEIGHT) / (double) blobs.size();
 	}
 
 	private void drawPool() {
 		gc.setFill(Color.BLACK);
-		int scale = 2;
-		
-		
-		
+		//int scale = 2;
 		
 		for(WeightedBlob b: blobs) {
-			double ovalSize = .8* Math.min(FormatConstants.SCENE_WIDTH, FormatConstants.SCENE_HEIGHT) / (double) blobs.size(); // calculate oval size based on window size
-	        double x = (gc.getCanvas().getWidth() / 4) + (b.getColumn() * ovalSize) + (ovalSize / 2); // calculate x coordinate with centered alignment
-	        double y = (gc.getCanvas().getHeight() / 4) + (b.getRow() * ovalSize) + (ovalSize / 2); // calculate y coordinate with centered alignment
-
-	        gc.fillOval(x, y, ovalSize, ovalSize); // draw the oval
+			
+	        double x = (gc.getCanvas().getWidth() / 4) + (b.getColumn() * ovalSize) + (ovalSize / 2); 
+	        double y = (gc.getCanvas().getHeight() / 4) + (b.getRow() * ovalSize) + (ovalSize / 2); 
+	        
+	        gc.fillOval(x, y, ovalSize, ovalSize);
 		}
 	}
 
 	private void drawPath() {
-		//Bag<Iterable<DirectedEdge>> lightPath = pool.refractPath(0);
-		Light light = new Light(1, pool);
-		int x1, y1, x2, y2;
-		
-		//gc.beginPath();
-		//use strokeLine instead
-		
-		for (Iterable<ColoredDirectedEdge> bag : light.shine(0)) {
-			for (ColoredDirectedEdge edge : bag) {
-				x1 = blobs.get(edge.to()).getColumn();
-				y1 = blobs.get(edge.to()).getRow();
-				x2 = blobs.get(edge.from()).getColumn();
-				y2 = blobs.get(edge.from()).getRow();
-				
-				gc.setStroke(new Color(edge.getR(), edge.getB(), edge.getG(), 1));
-				
-				gc.strokeLine(x1, y1, x2, y2); //doublex1 double y1 double x2 double y2 stroke a line using the current stroke paint.  
-			}
-			System.out.println();
-		}
-		
-		
+	    Bag<Iterable<DirectedEdge>> lightPath = pool.refractPath(0);
+	    Light light = new Light(1, pool);
+	    double x1, y1, x2, y2;
+
+	    // gc.beginPath();
+	    // use strokeLine instead
+	    System.out.println(pool.getDigraph().V());
+
+	    for (DirectedEdge e : pool.getDigraph().edges()) {
+	        // System.out.println(e);
+	    }
+
+	    for (Iterable<ColoredDirectedEdge> bag : light.shine(0)) {
+	        for (ColoredDirectedEdge edge : bag) {
+	            System.out.println(edge);
+	          
+	            double lineThickness = 2; 
+
+	            x1 = (gc.getCanvas().getWidth() / 4) + (blobs.get(edge.to()).getColumn() * ovalSize) + (ovalSize);
+	            y1 = (gc.getCanvas().getHeight() / 4) + (blobs.get(edge.to()).getRow() * ovalSize) + (ovalSize);
+	            x2 = (gc.getCanvas().getWidth() / 4) + (blobs.get(edge.from()).getColumn() * ovalSize) + (ovalSize);
+	            y2 = (gc.getCanvas().getHeight() / 4) + (blobs.get(edge.from()).getRow() * ovalSize) + (ovalSize);
+
+	            gc.setStroke(new Color(edge.getR(), edge.getB(), edge.getG(), 1));
+	            gc.setLineWidth(lineThickness);
+
+	            gc.strokeLine(x1, y1, x2, y2);
+	        }
+	        System.out.println();
+	    }
 	}
+
+
 
 	private void setFormatting() {
 		bp = new BorderPane();
