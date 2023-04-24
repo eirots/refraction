@@ -5,6 +5,8 @@ import backEnd.Light;
 import backEnd.Pool;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.In;
+import frontEnd.PoolDisplay;
+import frontEnd.RadioStart;
 import generalFrontEnd.Film;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,8 +15,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import radioBuilder.RadioStart;
 
+/**
+ * Test class for the application, allows for modular testing. 
+ * @author astorie
+ * @author Spencer Peck
+ *
+ */
 public class JFXHelloWorld extends Application {
 	private double stageX = 500;private double stageY = 500;
 	public static Stage window;

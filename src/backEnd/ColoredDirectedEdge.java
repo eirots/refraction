@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.DirectedEdge;
 /**
  * Functions as a normal DirectedEdge would However this contains variable fields for RGB color values
  * @author Spencer Peck
- *
+ * @see DirectedEdge
  */
 public class ColoredDirectedEdge extends DirectedEdge {
 	private int r,g,b;

@@ -43,17 +43,30 @@ public class Light {
 			for(DirectedEdge edge : bag ) {
 				currentWeight = (int) + edge.weight();
 			}
-			
+			// DEBUG LINE System.out.println(currentWeight + "current weight ");
 			if(currentWeight < lowestWeight) {
-				while(!lightPaths.isEmpty()) {
-					lightPaths.dequeue();
-				}
-				lightPaths.enqueue(bag);
-			}
+                while(!lightPaths.isEmpty()) {
+                    lightPaths.dequeue();
+                }
+                lowestWeight = currentWeight;
+                lightPaths.enqueue(bag);
+            }
+			
 			if(currentWeight == lowestWeight) {
 				lightPaths.enqueue(bag);				
 			}
+			 // DEBUG LINE System.out.println("Num Paths in Light Paths: " + lightPaths.size());
+	            /*debug chunk
+	             for(Iterable<DirectedEdge> tea : lightPaths){
+	                System.out.println("Path Start");
+	                for(DirectedEdge edge : tea) {
+	                    System.out.println(edge);
+	                }
+	                System.out.println("Path End");
+	            }
+	             */
 		}
+		
 
 		Queue<Iterable<ColoredDirectedEdge>> colorPaths = new Queue<>();
 		while(!lightPaths.isEmpty()) {
@@ -79,18 +92,27 @@ public class Light {
 			colorQueue.push(255);
 		}
 		int r = colorQueue.peek();
+		//DEBUG LINE System.out.println(colorQueue.peek());
 		int g = colorQueue.peek();
 		int b = colorQueue.peek();
 
 		for(DirectedEdge edge : path ) {
-			r =-(int) (edge.weight()/lightIntensity);
-			r =-(int) ((edge.weight()/lightIntensity) * 1.2);
-			r =-(int) ((int) (edge.weight()/lightIntensity) * 1.1);
-			coloredPath.enqueue(new ColoredDirectedEdge(edge.from(),edge.to(),edge.weight(),r,g,b));
+			r = r-(int) ((edge.weight() * 4.2)-lightIntensity);
+			g = g-(int) ((edge.weight() * 3.3)-lightIntensity);
+			b = b-(int) ((edge.weight() * 2.4)-lightIntensity);
+			
+			coloredPath.enqueue(new ColoredDirectedEdge(edge.from(),edge.to(),edge.weight(),checkMinColor(r),checkMinColor(g),checkMinColor(b)));
 		}
 		return coloredPath;
 		
 		
+	}
+	
+	private int checkMinColor(int c) {
+		if(c < 0) {
+			return 0;
+		}
+		else return c;
 	}
 	/**
 	 * Add a new color to the stack

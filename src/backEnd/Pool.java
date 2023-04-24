@@ -247,7 +247,8 @@ public class Pool {
 		out.println(columns);
 		out.println(rows);
 		out.println(rows*columns);
-		out.println(((rows-1)*columns) + ((rows-1)*3));
+		//m is rows n is columns
+		out.println((((rows-1)*columns) + (((rows-1)*3)*(columns-1)))*2) ;
 		out.print("0");
 		for( int i = 1; i < rows*columns; i++) {
 			if(i % rows == 0 && i != 0){
@@ -286,6 +287,10 @@ public class Pool {
 			throw new IllegalArgumentException("X & Y Cords must be within the pool boundries");
 		}
 		return  (vertexYCord + ((vertexXCord-1)*rowsInPool))-1;
+	}
+	
+	public EdgeWeightedDigraph getDigraph() {
+		return diagraph;
 	}
 	
 	public int getRowCount() {

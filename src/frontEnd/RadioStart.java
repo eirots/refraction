@@ -1,4 +1,4 @@
-package radioBuilder;
+package frontEnd;
 
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.Film;
@@ -27,11 +27,12 @@ public class RadioStart implements RefractionScene {
 	Label title, label;
 	ContinueButton btn;
 	ComboBox<Integer> height, width;
-	ObservableList<Integer> heightOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-			15);
-	ObservableList<Integer> widthOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-			15);
+	ObservableList<Integer> heightOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
+	ObservableList<Integer> widthOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
 
+	/**
+	 * Constructor for class RadioStart. Creates the first page of the application, showing comboboxes for width and height selection. 
+	 */
 	public RadioStart() {
 		this.ap = new AnchorPane();
 
@@ -63,29 +64,20 @@ public class RadioStart implements RefractionScene {
 		btn.setLayoutX(180);
 		btn.setLayoutY(393);
 		btn.setText("Please select sizes first!");
-		// TODO remove below
-		/*
-		 * btn.setOnAction((ActionEvent e)->{ if(height.getValue()!= null &&
-		 * width.getValue()!= null) { Films.next(new RadioSelector(width.getValue(),
-		 * height.getValue()).getScene()); } Films.swap(); });
-		 */
-		// TODO uncomment this line when ready to go
-		// btn.setDisable(true);
 		
-
+		btn.setDisable(true);
+	
 		width = new ComboBox<>(widthOptions);
 		width.setLayoutX(155);
 		width.setLayoutY(282);
 		width.setPromptText("Width");
 		width.setOnAction((ActionEvent e) -> moveToRadioSelector());
-		//width.getSelectionModel().select(3); // TODO remove this line
 		width.setPromptText("width");
 
 		height = new ComboBox<>(heightOptions);
 		height.setLayoutX(155);
 		height.setLayoutY(310);
 		height.setPromptText("Height");
-		//height.getSelectionModel().select(3); // TODO remove this line
 		height.setOnAction((ActionEvent e) -> moveToRadioSelector());
 		height.setPromptText("height");
 	}
@@ -98,13 +90,11 @@ public class RadioStart implements RefractionScene {
 
 			// delay is needed in case both width and height try to grab at the same time,
 			// this can cause an exception to fire
-
 			btn.setLayoutX(FormatConstants.BTN_X);
 			btn.setLayoutY(FormatConstants.BTN_Y);
 			btn.setText("Submit");
 			btn.setDisable(false);
 			btn.setOnAction(new EventHandler<ActionEvent>() {
-
 				@Override
 				public void handle(ActionEvent e) {
 					Film.next(new RadioSelector(width.getValue(), height.getValue()).getScene());
