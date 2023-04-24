@@ -2,6 +2,7 @@ package generalFrontEnd;
 
 import edu.princeton.cs.algs4.Queue;
 import frontEnd.RadioStart;
+import frontEnd.StartApplication;
 import javafx.scene.Scene;
 import testSandbox.JFXHelloWorld;
 
@@ -25,9 +26,9 @@ public class Film {
 	public static void swap() {
 		if (sceneQueue.isEmpty()) {
 			sceneQueue.enqueue(new RadioStart().getScene());
-			JFXHelloWorld.window.setScene(sceneQueue.dequeue());
+			StartApplication.window.setScene(sceneQueue.dequeue());
 		} else {
-			JFXHelloWorld.window.setScene(sceneQueue.dequeue());
+			StartApplication.window.setScene(sceneQueue.dequeue());
 		}
 	}
 
