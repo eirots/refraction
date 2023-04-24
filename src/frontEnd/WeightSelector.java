@@ -1,4 +1,4 @@
-package mixingPaint;
+package frontEnd;
 
 import java.util.ArrayList;
 
@@ -59,10 +59,13 @@ public class WeightSelector implements RefractionScene {
 		scene = new Scene(bp);
 	}
 
+	/**
+	 * Creates a number of dropdowns based on what user previously entered. 
+	 */
 	private void makeDropDowns() {
 		ObservableList<Integer> weightOptions = FXCollections.observableArrayList(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
 				13, 14, 15, 16, 17, 18, 19, 20);
-		// Label garbLabel;
+		
 		ComboBox<Integer> cb;
 		cbList = new ArrayList<ComboBox<Integer>>();
 
@@ -75,21 +78,23 @@ public class WeightSelector implements RefractionScene {
 					cb.setDisable(true);
 				}
 				if (cbList.add(cb)) {
-					System.out.println("added " + " to " + cbList.size());
+					// DEBUG LINE System.out.println("added " + " to " + cbList.size());
 				}
 				cb.setValue(5);
 				gp.add(cb, row, col);
-				GridPane.setHgrow(cb, Priority.ALWAYS);
-				GridPane.setVgrow(cb, Priority.ALWAYS);
+				// DEBUG LINES GridPane.setHgrow(cb, Priority.ALWAYS);
+				// GridPane.setVgrow(cb, Priority.ALWAYS);
 			}
 		}
 
 	}
 
 	/**
-	 * Method to return a Queue of blobs, since private class WeightedButton cannot access fields in this class.
+	 * Method to return a Queue of blobs, since private class WeightedButton cannot
+	 * access fields in this class.
+	 * 
 	 * @see WeightedButton
-	 * @return Queue of WeightedBlobs, or an empty queue if none were created.  
+	 * @return Queue of WeightedBlobs, or an empty queue if none were created.
 	 */
 	private Queue<WeightedBlob> getBlobList() {
 		if (blobs == null) {
@@ -98,17 +103,20 @@ public class WeightSelector implements RefractionScene {
 		return blobs;
 	}
 
+	/**
+	 * Sets formatting for Scene's children
+	 */
 	private void setFormatting() {
 
 		bp.prefHeight(FormatConstants.SCENE_HEIGHT);
 		bp.prefWidth(FormatConstants.SCENE_WIDTH);
-		gp.prefHeight(FormatConstants.GP_HEIGHT);
-		gp.prefWidth(FormatConstants.GP_WIDTH);
+		gp.maxHeight(FormatConstants.GP_HEIGHT);
+		gp.maxWidth(FormatConstants.GP_WIDTH);
 
 		label = new Label();
 		label.setLayoutX(15);
 		label.setLayoutY(15);
-		label.setText("BLOB PAGE");
+		label.setText("Please select weights. Unavailable weights are gray");
 		label.setFont(new Font(18));
 
 		btn = new WeightedButton();
@@ -122,7 +130,7 @@ public class WeightSelector implements RefractionScene {
 		BorderPane.setAlignment(label, Pos.CENTER);
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		BorderPane.setAlignment(btn, Pos.CENTER);
-		BorderPane.setMargin(gp, FormatConstants.BP_MARGINS);
+		// BorderPane.setMargin(gp, FormatConstants.BP_MARGINS);
 
 		// debug line gp.setBorder(new Border(new BorderStroke(Paint.valueOf("BLACK"),
 		// BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -155,7 +163,7 @@ public class WeightSelector implements RefractionScene {
 					for (int i = 0; i < width; i++) {
 						for (int j = 0; j < height; j++) {
 							flatRadios[index] = radios[i][j];
-							System.out.println(flatRadios[index].printableToString());
+							// DEBUG LINE System.out.println(flatRadios[index].printableToString());
 							index++;
 						}
 					}
@@ -167,14 +175,7 @@ public class WeightSelector implements RefractionScene {
 						listOfBlobs.add(temp);
 					}
 
-					// System.out.println(blobs);
-
-					// TODO remove devline
-					for (WeightedBlob blob : blobs) {
-						System.out.println(blob.toString());
-					}
-
-					Film.next(new PoolDisplay(new Pool(width, height, blobs), listOfBlobs, width, height).getScene());
+					Film.next(new PoolDisplay(new Pool(height, width, blobs), listOfBlobs, height, width).getScene());
 					Film.swap();
 				}
 			});
