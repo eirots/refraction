@@ -1,5 +1,7 @@
 package generalFrontEnd;
 
+import edu.princeton.cs.algs4.StdRandom;
+
 /**
  * WeightedBlobs ideally should be used with an array of AwareRadios. 
  * @author astorie
@@ -23,6 +25,41 @@ public class WeightedBlob {
 		this.weight = weight;
 		this.index = index;
 	}
+	
+	
+	/**
+	 * Lightweight constructor that foregoes AwareRadios. Allows for drawing much larger graphs. 
+	 * @param row row this should be painted in
+	 * @param column column to be painted in
+	 * @param weight weight to apply to node
+	 * @param index 1D array index
+	 */
+	private WeightedBlob(int row, int column, int weight, int index) {
+		selected = false;
+		this.row = row;
+		this.column = column;
+		this.weight = weight;
+		this.index = index;
+	}
+	
+	/**
+	 * Creates an array of WeightedBlobs with random weights. 
+	 * @param rows
+	 * @param columns
+	 * @return
+	 */
+	public static WeightedBlob[] randomArray(int rows, int columns) {
+		WeightedBlob[] returnArr = new WeightedBlob[rows*columns];
+		
+		int in = 0;
+		for(int i =0; i<rows; i++) {
+			for(int j = 0; j<columns; j++) {
+				returnArr[in] = new WeightedBlob(i, j, StdRandom.uniformInt(1, 20), in);
+			}
+		}
+		return returnArr;
+	}
+	
 	
 	public int getIndex() {
 		return index;
