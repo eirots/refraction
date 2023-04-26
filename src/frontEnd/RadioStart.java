@@ -1,15 +1,17 @@
 package frontEnd;
 
+import java.awt.Window;
+
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.Film;
 import generalFrontEnd.FormatConstants;
 import generalFrontEnd.RefractionScene;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +28,7 @@ public class RadioStart implements RefractionScene {
 	AnchorPane ap;
 	Label title, label;
 	ContinueButton btn;
+	Button bigNumbers;
 	ComboBox<Integer> height, width;
 	ObservableList<Integer> heightOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
 	ObservableList<Integer> widthOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
@@ -37,7 +40,7 @@ public class RadioStart implements RefractionScene {
 		this.ap = new AnchorPane();
 
 		setFormatting();
-		ap.getChildren().addAll(label, title, btn, width, height);
+		ap.getChildren().addAll(label, title, btn, width, height, bigNumbers);
 		this.scene = new Scene(ap);
 	}
 
@@ -59,7 +62,18 @@ public class RadioStart implements RefractionScene {
 		title.setLayoutY(32);
 		title.setText("Welcome to Refraction!");
 		title.setFont(new Font(48));
-
+		
+		bigNumbers = new Button();
+		bigNumbers.setLayoutX(300);
+		bigNumbers.setLayoutY(280);
+		bigNumbers.setText("Show me some larger numbers!");
+		bigNumbers.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					Film.next(new BigNumberSelection().getScene());
+					Film.swap();
+				}
+			});
 		btn = new ContinueButton();
 		btn.setLayoutX(180);
 		btn.setLayoutY(393);

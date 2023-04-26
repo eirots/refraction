@@ -34,6 +34,7 @@ public class PoolDisplay implements RefractionScene {
 	private ContinueButton btn;
 	private Canvas canvas;
 	private GraphicsContext gc;
+	private int shineValue;
 	
 	//objects
 	ArrayList<WeightedBlob> blobs;
@@ -49,6 +50,20 @@ public class PoolDisplay implements RefractionScene {
 		this.width = width;
 		this.height = height;
 		this.blobs = (ArrayList<WeightedBlob>) blobs;
+		shineValue = 0;
+		
+		setOvalSize();
+		setFormatting();
+		drawPool();
+
+		scene = new Scene(bp);
+	}
+	public PoolDisplay(Pool p, Iterable<WeightedBlob> blobs, int width, int height, int shineValue) {
+		this.pool = p;
+		this.width = width;
+		this.height = height;
+		this.blobs = (ArrayList<WeightedBlob>) blobs;
+		this.shineValue = shineValue;
 		
 		setOvalSize();
 		setFormatting();
@@ -85,10 +100,11 @@ public class PoolDisplay implements RefractionScene {
 	 */
 	private void drawPath() {
 	    Light light = new Light(1, pool);
+	    
 	    double x1, y1, x2, y2;
 	    
 	    //DEBUG LINE  System.out.println(light.shine(0).size());
-	    for (Iterable<ColoredDirectedEdge> bag : light.shine(0)) {
+	    for (Iterable<ColoredDirectedEdge> bag : light.shine(shineValue)) {
 	        for (ColoredDirectedEdge edge : bag) {
 	            //DEBUG LINE System.out.println(edge);
 	            Color color = Color.rgb(edge.getR(), edge.getG(), edge.getB());
