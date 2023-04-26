@@ -25,6 +25,7 @@ public class Film {
 	 */
 	public static void swap() {
 		if (sceneQueue.isEmpty()) {
+			System.gc();
 			sceneQueue.enqueue(new RadioStart().getScene());
 			StartApplication.window.setScene(sceneQueue.dequeue());
 		} else {
