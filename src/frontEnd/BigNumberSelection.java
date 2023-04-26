@@ -1,11 +1,15 @@
 package frontEnd;
 
-import java.awt.Window;
+import java.util.ArrayList;
 
+import backEnd.Pool;
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.StdRandom;
 import generalFrontEnd.ContinueButton;
 import generalFrontEnd.Film;
 import generalFrontEnd.FormatConstants;
 import generalFrontEnd.RefractionScene;
+import generalFrontEnd.WeightedBlob;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,44 +21,32 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
-/**
- * Creates a Scene Graph for the first page in the application.
- * 
- * @author astorie
- *
- */
-public class RadioStart implements RefractionScene {
+public class BigNumberSelection implements RefractionScene {
+
 	Scene scene;
 	AnchorPane ap;
 	Label title, label;
 	ContinueButton btn;
-	Button bigNumbers;
 	ComboBox<Integer> height, width;
-	ObservableList<Integer> heightOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
-	ObservableList<Integer> widthOptions = FXCollections.observableArrayList(3, 4, 5, 6, 7, 8, 9, 10);
 
-	/**
-	 * Constructor for class RadioStart. Creates the first page of the application, showing comboboxes for width and height selection. 
-	 */
-	public RadioStart() {
-		this.ap = new AnchorPane();
+	ObservableList<Integer> bigWidthOptions = FXCollections.observableArrayList(50, 75, 100, 125, 150, 175, 200);
+	ObservableList<Integer> bigHeightOptions = FXCollections.observableArrayList(50, 75, 100, 125, 150, 175, 200);
+	public BigNumberSelection() {
+		ap = new AnchorPane();
 
 		setFormatting();
-		ap.getChildren().addAll(label, title, btn, width, height, bigNumbers);
+		ap.getChildren().addAll(label, title, btn, width, height);
 		this.scene = new Scene(ap);
 	}
 
-	/**
-	 * Sets formatting for children
-	 */
 	private void setFormatting() {
 		ap.prefHeight(FormatConstants.SCENE_HEIGHT);
 		ap.prefWidth(FormatConstants.SCENE_WIDTH);
 
 		label = new Label();
-		label.setLayoutX(89);
+		label.setLayoutX(80);
 		label.setLayoutY(185);
-		label.setText("Please select your container size");
+		label.setText("Please select your larger size container");
 		label.setFont(new Font(24));
 
 		title = new Label();
@@ -62,44 +54,30 @@ public class RadioStart implements RefractionScene {
 		title.setLayoutY(32);
 		title.setText("Welcome to Refraction!");
 		title.setFont(new Font(48));
-		
-		bigNumbers = new Button();
-		bigNumbers.setLayoutX(300);
-		bigNumbers.setLayoutY(280);
-		bigNumbers.setText("Show me some larger numbers!");
-		bigNumbers.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent e) {
-					Film.next(new BigNumberSelection().getScene());
-					Film.swap();
-				}
-			});
+
 		btn = new ContinueButton();
 		btn.setLayoutX(180);
 		btn.setLayoutY(393);
 		btn.setText("Please select sizes first!");
-		
+
 		btn.setDisable(true);
-	
-		width = new ComboBox<>(widthOptions);
+
+		width = new ComboBox<>(bigWidthOptions);
 		width.setLayoutX(155);
 		width.setLayoutY(282);
-		width.setPromptText("Width");
-		width.setOnAction((ActionEvent e) -> moveToRadioSelector());
+		width.setPromptText("Big Width");
+		width.setOnAction((ActionEvent e) -> moveToPoolView());
 		width.setPromptText("width");
 
-		height = new ComboBox<>(heightOptions);
+		height = new ComboBox<>(bigHeightOptions);
 		height.setLayoutX(155);
 		height.setLayoutY(310);
-		height.setPromptText("Height");
-		height.setOnAction((ActionEvent e) -> moveToRadioSelector());
+		height.setPromptText("Big Height");
+		height.setOnAction((ActionEvent e) -> moveToPoolView());
 		height.setPromptText("height");
 	}
 
-	/**
-	 * Private method to move to radio selector. Called when button is clicked
-	 */
-	private void moveToRadioSelector() {
+	private void moveToPoolView() {
 		if (height.getValue() != null && width.getValue() != null) {
 
 			// delay is needed in case both width and height try to grab at the same time,
@@ -111,21 +89,23 @@ public class RadioStart implements RefractionScene {
 			btn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					Film.next(new RadioSelector(width.getValue(), height.getValue()).getScene());
+					int heightValue = height.getValue();
+					int widthValue = width.getValue();
+					ArrayList<WeightedBlob> blobList = WeightedBlob.randomWeights(heightValue, widthValue);
+					Queue<WeightedBlob> blobQ = WeightedBlob.blobQueue(blobList);
+					
+					Film.next(
+							new PoolDisplay(new Pool(widthValue, heightValue, blobQ), blobList, heightValue, widthValue, (heightValue/2))
+									.getScene());
 					Film.swap();
 				}
 			});
 		}
 	}
 
-	/**
-	 * Creates a Scene Graph that asks the user what size they would like their
-	 * container to be
-	 * 
-	 * @return Returns the first page of the application
-	 */
+	@Override
 	public Scene getScene() {
-		return scene;
+		return this.scene;
 	}
 
 }
